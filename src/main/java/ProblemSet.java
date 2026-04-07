@@ -18,9 +18,7 @@ public static void main(String args[]) {
 	int comma = input.indexOf(',');
 
 		String firstEmail = input.substring (0, comma);
-		firstEmail = firstEmail.trim();
 		String secondEmail = input.substring (comma + 1);
-		secondEmail = secondEmail.trim();
 	
 		System.out.println(process(firstEmail));
 		System.out.println(process(secondEmail));
