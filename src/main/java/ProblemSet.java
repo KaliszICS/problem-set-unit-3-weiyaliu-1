@@ -1,19 +1,15 @@
 /**
-
-        * File: Unit 3: Problem Set
-
-        * Author: Weiya Liu
-
-        * Date Created: March 27, 2026
-
-        * Date Last Modified: April 7, 2026
-
-        */
+    * File: Unit 3: Problem Set
+    * Author: Weiya Liu
+    * Date Created: March 27, 2026
+    * Date Last Modified: April 7, 2026
+*/
 
 import java.util.Scanner;
 
 public class ProblemSet {
 
+// takes in two emails
 public static void main(String args[]) {
 	Scanner scanner = new Scanner (System.in);
 	System.out.print("Input two emails: ");
@@ -21,17 +17,14 @@ public static void main(String args[]) {
 
 	int comma = input.indexOf(',');
 
-	if (comma == -1 ) {
-		System.out.println("Invalid: Enter two emails separated by a space and a comma");
-	} else {
 		String firstEmail = input.substring (0, comma);
 		firstEmail = firstEmail.trim();
 		String secondEmail = input.substring (comma + 1);
 		secondEmail = secondEmail.trim();
 	
-		process(firstEmail);
-		process(secondEmail);
-	}
+		System.out.println(process(firstEmail));
+		System.out.println(process(secondEmail));
+	
 
 	scanner.close();
 
@@ -65,7 +58,7 @@ public static void main(String args[]) {
 		String local = email.substring(0,firstAt);
 		String domain = email.substring(firstAt + 1);
 
-		// exception B: + and _ are only allowed in local
+		// exception B: + and _ are only allowed in local (i did no + or _ allowed in domain)
 		if (domain.contains("+") || domain.contains("_")) {
 			return "Invalid: + or _ not allowed in domain";
 		}
@@ -98,18 +91,17 @@ public static void main(String args[]) {
 		return "Valid";
 	}
 
-// extract local 
+// extracting local 
 public static String getLocal (String email) {
 	int atIndex = email.indexOf('@');
 	String local = email.substring (0, atIndex);
 
-// exception C: gmail normalization
-String domain = email.substring(atIndex + 1);
-	if (domain.equalsIgnoreCase("gmail.com")) {
-			if (local.contains(".")) {
-				local = local.replace(".", "");
-		}
+// exception c: gmail normalization
+
+	if (local.contains(".")) {
+		local = local.replace(".", "");
 	} 
+	
 	return local;
 }
 
@@ -119,16 +111,16 @@ public static String getDomain (String email) {
 	return email.substring(atIndex + 1);
 }
 
-// process email
-public static void process (String email) {
+// processing the  email
+public static String process (String email) {
 	String result = validEmail(email);
 
 	if (result.startsWith("Valid")) {
 		String local = getLocal(email);
 		String domain = getDomain(email);
-		System.out.println(email + ": " + result + " | Local: " + local + " | Domain: " + domain );
+		return (email + ": " + result + " | Local: " + local + " | Domain: " + domain );
 	} else {
-		System.out.println(email + ": " + result);
+		return (email + ": " + result);
 	}
 	}
 }
