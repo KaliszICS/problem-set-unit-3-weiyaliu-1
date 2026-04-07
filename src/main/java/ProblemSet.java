@@ -6,7 +6,7 @@
 
         * Date Created: March 27, 2026
 
-        * Date Last Modified: April 6, 2026
+        * Date Last Modified: April 7, 2026
 
         */
 
@@ -16,16 +16,29 @@ public class ProblemSet {
 
 public static void main(String args[]) {
 	Scanner scanner = new Scanner (System.in);
-	System.out.print("Input an Email: ");
-	String email = scanner.nextLine();
+	System.out.print("Input two emails: ");
+	String input = scanner.nextLine();
 
-	System.out.println(validEmail(email));
+	int comma = input.indexOf(',');
+
+	if (comma == -1 ) {
+		System.out.println("Invalid: Enter two emails separated by a space and a comma");
+	} else {
+		String firstEmail = input.substring (0, comma);
+		firstEmail = firstEmail.trim();
+		String secondEmail = input.substring (comma + 1);
+		secondEmail = secondEmail.trim();
+	
+		process(firstEmail);
+		process(secondEmail);
+	}
 
 	scanner.close();
 
 	}
 
-public static String validEmail (String email) {
+	// validate email (option 2 rules)
+	public static String validEmail (String email) {
 		
 		// contains one @
 		int firstAt = email.indexOf('@');
@@ -82,18 +95,40 @@ public static String validEmail (String email) {
 			return "Invalid: Domain extension too long";
 		}
 
-		// exception C: 
-		if (domain.equalsIgnoreCase("gmail.com")) {
-			if (local.contains(".")) {
-				local = local.replace(".", "");
-				return "Valid (Gmail normalized)";
-			} else {
-				return "Valid";
-			}
-		
-		}
-
 		return "Valid";
 	}
 
+// extract local 
+public static String getLocal (String email) {
+	int atIndex = email.indexOf('@');
+	String local = email.substring (0, atIndex);
+
+// exception C: gmail normalization
+String domain = email.substring(atIndex + 1);
+	if (domain.equalsIgnoreCase("gmail.com")) {
+			if (local.contains(".")) {
+				local = local.replace(".", "");
+		}
+	} 
+	return local;
+}
+
+//extract domain
+public static String getDomain (String email) {
+	int atIndex = email.indexOf('@');
+	return email.substring(atIndex + 1);
+}
+
+// process email
+public static void process (String email) {
+	String result = validEmail(email);
+
+	if (result.startsWith("Valid")) {
+		String local = getLocal(email);
+		String domain = getDomain(email);
+		System.out.println(email + ": " + result + " | Local: " + local + " | Domain: " + domain );
+	} else {
+		System.out.println(email + ": " + result);
+	}
+	}
 }
