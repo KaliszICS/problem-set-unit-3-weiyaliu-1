@@ -1,0 +1,12 @@
+K(30%): 100
+I(30%): 85
+C(10%): 100
+A(30%): 85
+91%
+
+Should be able to accept two emails or one.
+Gmail normalized is not being output with valid when a gmail address
++ and _ should not be allowed to start the email.
+gmail addresses should be allowed to start with a .
+second email address is including the space after the comma.
+Otherwise great work!
